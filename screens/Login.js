@@ -21,7 +21,7 @@ import { loginUser } from "../firebaseconfig";
 import userData from "../recoil/userData";
 import { useRecoilState } from "recoil";
 import useStore from "./store/store";
-
+import PasswordField from "../components/PasswordField";
 
 import { doc,updateDoc,onSnapshot } from "firebase/firestore";
 const Login = ({ navigation }) => {
@@ -134,7 +134,9 @@ const Login = ({ navigation }) => {
         >
           Password
         </Text>
-        <TextInput placeholder="Enter password" style={styles.input}  onChangeText={(text) => setPassword(text)}/>
+        
+        <PasswordField placeholder="Enter password" style={styles.input}   onChangeText={(text) => setPassword(text)} />
+        {/* <TextInput placeholder="Enter password" style={styles.input} /> */}
         <TouchableOpacity onPress={()=>{navigation.navigate("forgot")}}>
           <Text
             style={{
@@ -237,7 +239,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   input: {
-    height: hp("5.7%"),
+    height: 50,
     borderWidth: 1,
     borderColor: "#DBDBDB",
     paddingLeft: 15,

@@ -7,26 +7,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import React, { useState ,useEffect} from "react";
+import React, { useState ,useEffect,useRef} from "react";
 import CustomScreen from "../components/CustomScreen";
 import Logo from "../assets/logo.svg";
 import { COLORS, hp, wp } from "../theme";
 import BigButton from "../components/BigButton";
 import { createUser,db, loginUser } from "../firebaseconfig";
 import { setDoc, doc } from "firebase/firestore"; 
-
+import PasswordField from "../components/PasswordField";
 import useStore from "./store/store";
 import * as Location from 'expo-location';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 import { auth } from "../firebaseconfig";
-
-
-
-
-
-
+import PhoneInput from "react-native-phone-number-input";
 import CountryPicker, {
   getAllCountries,
   getCallingCode,
@@ -41,6 +36,8 @@ const Register = ({ navigation }) => {
   const recaptchaVerifier = React.useRef(null);
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
+  const phoneInput = useRef();
+  const [phone, setPhone] = useState(true);
   const attemptInvisibleVerification = true;
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -231,51 +228,18 @@ const Register = ({ navigation }) => {
         >
           Mobile number
         </Text>
-        <View
-          style={[
-            styles.input,
-            { alignItems: "center", flexDirection: "row", paddingLeft: 2 },
-          ]}
-        >
-          {/*  */}
-          {/* <TouchableOpacity
-          style={{
-            height: "100%",
-            alignItems: "center",
-            flexDirection: "row",
-            width: "100%",
+        <PhoneInput
+          ref={phoneInput}
+          containerStyle={styles.input2}
+          defaultValue={phone}
+          defaultCode="DM"
+          layout="first"
+          onChangeText={(text) => {
+            setPhone(text);
           }}
-        >
-          <CountryPicker
-            withCallingCode
-            withFlag
-            withFlagButton={true}
-            countryCodes
-            renderFlagButton={() => <FlagButton />}
-            onSelect={(e) => setCountry(e)}
+  
           />
-          <FlagButton
-            withEmoji={true}
-            withCallingCodeButton={true}
-            withFlagButton={true}
-            withCurrencyButton={true}
-          />
-          <Text>+{country?.callingCode[0]}</Text>
-        </TouchableOpacity> */}
-          {/* <View
-          style={{
-            width: 1,
-            height: "60%",
-            backgroundColor: "#263238",
-            marginHorizontal: 3,
-          }}
-        /> */}
-          <TextInput
-            placeholder="Enter your mobile number"
-            style={{ height: "100%", width: "100%", paddingLeft: 13 }} value={number}
-            keyboardType="phone-pad"   onChangeText={text => setNumber(text)}
-          />
-        </View>
+      
 
         <Text
           style={{
@@ -286,7 +250,7 @@ const Register = ({ navigation }) => {
         >
           Password
         </Text>
-        <TextInput placeholder="Enter password" style={styles.input}  onChangeText={text => setPassword(text)}/>
+        <PasswordField placeholder="Enter password" style={styles.input}  onChangeText={text => setPassword(text)}/>
 
         <View
           style={{
@@ -361,7 +325,7 @@ export default Register;
 
 const styles = StyleSheet.create({
   input: {
-    height: hp("5.7%"),
+    height: 50,
     borderWidth: 1,
     borderColor: "#DBDBDB",
     paddingLeft: 15,
@@ -372,5 +336,15 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Hellix-Regular",
     fontSize: 13,
+  },
+
+  input2: {
+    height: 50,
+    width: "100%",
+    borderRadius: 8,
+    borderColor: "#00000040",
+    borderWidth: 1.5,
+    marginTop: 5,
+    paddingHorizontal: 15,
   },
 });

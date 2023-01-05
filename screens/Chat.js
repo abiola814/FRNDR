@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput
 } from "react-native";
 import React from "react";
 
@@ -106,6 +107,11 @@ const Chat = ({ navigation }) => {
   const userdetails = useStore((state)=>state.userdetails);
   const [chatting,setChat] = useState([]);
   const [status,setstatus] = useState(null);
+  const [showSearchInputField, hideInput] = useState(false);
+
+  const searching = () => {
+    // this is where searching take place
+  };
   // const getstatus = (iden) =>{
   //   const docRef = doc(db, "users", iden);
   //   const docSnaps = getDoc(docRef)
@@ -130,9 +136,27 @@ userdetails.user.uid && getchats()
 
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.header}>
-        <Text style={Styles.HeaderText}>Messages</Text>
-        <TouchableOpacity>
-          <EvilIcons name="search" size={24} color="black" />
+      {showSearchInputField && (
+          <TextInput
+            placeholder="Search..."
+            onChangeText={(text) => searching(text)}
+            onBlur={() => hideInput(false)}
+            style={{
+              backgroundColor: "whitesmoke",
+              flex: 1,
+              paddingHorizontal: 10,
+              height: 30,
+            }}
+          />
+        )}
+        {!showSearchInputField && (
+          <Text style={Styles.HeaderText}>Messages</Text>
+        )}
+        <TouchableOpacity
+          style={{ paddingLeft: 20 }}
+          onPress={() => hideInput(true)}
+        >
+          <EvilIcons name="search" size={27} color="black" />
         </TouchableOpacity>
       </View>
       <View style={{ padding: 15 }}>
