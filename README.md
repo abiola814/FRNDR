@@ -47,5 +47,5 @@ Put the API call here: (./screens/Home.js line 227)
 # I will continue adding some tips for you to make it easier
 
 
-![alt text](https://github.com/hamzashadeez.png)
-# Hamza
+![alt text](https://avatars.githubusercontent.com/u/57540689?s=400&u=16cd8c41726eff344f0636b600dbfe84524c1fdb&v=4)
+# OLADUNJOYE ABIOLA
